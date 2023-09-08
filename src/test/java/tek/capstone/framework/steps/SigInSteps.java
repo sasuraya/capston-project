@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import tek.capstone.framework.pages.POMFactory;
 import tek.capstone.framework.utilities.CommonUtility;
+import tek.capstone.framework.utilities.DataGenerator;
 
 public class SigInSteps extends CommonUtility {
 	 // here i Create an instance of POMFactory to access page objects
@@ -62,7 +63,7 @@ public class SigInSteps extends CommonUtility {
 
 	          //here i am trying to Fill the sign-up information with data from the DataTable
 	          sendText(pomFactory.signInPage().nameInputField, signUpData.get(0).get("name"));
-	          sendText(pomFactory.signInPage().emailInputField, signUpData.get(0).get("email"));
+	          sendText(pomFactory.signInPage().emailInputField, DataGenerator.emailGenerator());
 	          sendText(pomFactory.signInPage().passwordInputField, signUpData.get(0).get("password"));
 	          sendText(pomFactory.signInPage().confirmPassInputField, signUpData.get(0).get("confirmPassword"));
 	          logger.info("Sign-up information is entered successfully");

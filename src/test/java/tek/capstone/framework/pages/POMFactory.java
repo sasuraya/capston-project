@@ -16,7 +16,7 @@ public class POMFactory extends BaseSetup {
 		this.retailAccountPage = new RetailAccountPage();
 	    this.retailOrderPage = new RetailOrderPage();
 	}
-	// then we ceate get methed
+	// then we create get methed
 	public RetailHomePage retailHomePage() {
 		return this.retailHomePage;
 	}

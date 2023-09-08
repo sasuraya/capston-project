@@ -7,7 +7,9 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import tek.capstone.framework.pages.POMFactory;
+import tek.capstone.framework.pages.RetailAccountPage;
 import tek.capstone.framework.utilities.CommonUtility;
+import tek.capstone.framework.utilities.DataGenerator;
 
 
 public class RetailAccountSteps extends CommonUtility {
@@ -27,8 +29,9 @@ public class RetailAccountSteps extends CommonUtility {
 	        clearTextUsingSendKeys(pomFactory.signInPage().nameInputField);
 	        sendText(pomFactory.signInPage().nameInputField, name);
 	        logger.info("Name was entered successfully");
+	        
 	        clearTextUsingSendKeys(pomFactory.retailAccountPage().phoneField);
-	        sendText(pomFactory.retailAccountPage().phoneField, phoneNumber);
+	        sendText(pomFactory.retailAccountPage().phoneField, DataGenerator.getPhoneNumber());
 	        logger.info("PhoneNumber was entered successfully");	
 	
 	}
@@ -41,8 +44,11 @@ public class RetailAccountSteps extends CommonUtility {
 
 	@Then("user profile information should be updated")
 	public void userProfileInformationShouldBeUpdated() {
-		waitTillPresence(pomFactory.retailAccountPage().sucessMasgCard);
-		Assert.assertTrue(pomFactory.retailAccountPage().personalInfoUpdateMsg.isDisplayed());
+		waitTillPresence(pomFactory.retailAccountPage().personalInfoUpdateMsg);
+		String expectedMssg = "Personal Information Updated Successfully";
+		String actualMssg = pomFactory.retailAccountPage().personalInfoUpdateMsg.getText();
+		Assert.assertEquals(expectedMssg, actualMssg);
+		//Assert.assertTrue(pomFactory.retailAccountPage().personalInfoUpdateMsg.isDisplayed());
 		logger.info(">> user profile option shuld be updated");
 	}
 // add Payment Method
@@ -53,20 +59,40 @@ public class RetailAccountSteps extends CommonUtility {
 		logger.info(">> user click on addpayment link");
 	}
 
+	
+//  // with data generator 
 	@When("User fill Debit or credit card information")
 	public void userFillDebitOrCreditCardInformation(DataTable dataTable) {
 		List<Map<String, String>> cardInfo = dataTable.asMaps(String.class, String.class);
         for (int i = 0; i < cardInfo.size(); i++) {
-            sendText(pomFactory.retailAccountPage().cardNumberField, cardInfo.get(0).get("cardNumber"));
-            sendText(pomFactory.retailAccountPage().nameOnCardField, cardInfo.get(0).get("nameOnCard"));
-            sendText(pomFactory.retailAccountPage().expMonthInput, cardInfo.get(0).get("expirationMonth"));
-            sendText(pomFactory.retailAccountPage().expYearInput, cardInfo.get(0).get("expirationYear"));
-            sendText(pomFactory.retailAccountPage().securityCodeInput, cardInfo.get(0).get("securityCode"));      
+          RetailAccountPage retailPage = pomFactory.retailAccountPage();
+          sendText(pomFactory.retailAccountPage().cardNumberField, DataGenerator.getCardNumber());
+          sendText(pomFactory.retailAccountPage().nameOnCardField, cardInfo.get(0).get("nameOnCard"));
+          sendText(pomFactory.retailAccountPage().expMonthInput, cardInfo.get(0).get("expirationMonth"));
+          sendText(pomFactory.retailAccountPage().expYearInput, cardInfo.get(0).get("expirationYear"));
+          sendText(pomFactory.retailAccountPage().securityCodeInput, cardInfo.get(0).get("securityCode"));      
+      
+      logger.info("User shuld fill Debit or credit card information");  
         }
-        logger.info("User shuld fill Debit or credit card information");
+	}
+	
+	// befor creating data generator
+//	@When("User fill Debit or credit card information")
+//	public void userFillDebitOrCreditCardInformation(DataTable dataTable) {
+//		List<Map<String, String>> cardInfo = dataTable.asMaps(String.class, String.class);
+//        for (int i = 0; i < cardInfo.size(); i++) {
+//            sendText(pomFactory.retailAccountPage().cardNumberField, cardInfo.get(0).get("cardNumber"));
+//            sendText(pomFactory.retailAccountPage().nameOnCardField, cardInfo.get(0).get("nameOnCard"));
+//            sendText(pomFactory.retailAccountPage().expMonthInput, cardInfo.get(0).get("expirationMonth"));
+//            sendText(pomFactory.retailAccountPage().expYearInput, cardInfo.get(0).get("expirationYear"));
+//            sendText(pomFactory.retailAccountPage().securityCodeInput, cardInfo.get(0).get("securityCode"));      
+//        }
+//        logger.info("User shuld fill Debit or credit card information");  
+	
+	
         
         // i need to know what i did wrong here 
-        // for this stem i created atumiv thing in steps plz take look
+        // for this step i created atumic locater thing in pages plz take look
 //		System.out.println(">>user is fillig debit or criet card information");
 //		List<Map<String, String>> accountData = dataTable.asMaps(String.class, String.class);
 //		String cardNumber = accountData.get(0).get("cardNumber");
@@ -77,7 +103,7 @@ public class RetailAccountSteps extends CommonUtility {
 //		System.out.println("Card Number: " + cardNumber + ", Name on the card: " + nameOnTheCard + ", Expiration Date: "
 //				+ expirationDateMonth + "/" + expirationDateYear + ", Security Code: " + securityCode);
 
-	}
+//	}
 
 	@When("User click on Add your card button")
 	public void userClickOnAddYourCardButton() {
@@ -99,19 +125,31 @@ public class RetailAccountSteps extends CommonUtility {
 		click(pomFactory.retailAccountPage().editOptionCard);
 		logger.info("User click on Edit option of card section");
 	}
-
+	
 	@When("user edit information with below data")
 	public void userEditInformationWithBelowData(DataTable dataTable) {
-		List<Map<String, String>> cardInfo = dataTable.asMaps(String.class, String.class);
-        for (int i = 0; i < cardInfo.size(); i++) {
-            sendText(pomFactory.retailAccountPage().cardNumberField, cardInfo.get(0).get("cardNumber"));
-            sendText(pomFactory.retailAccountPage().nameOnCardField, cardInfo.get(0).get("nameOnCard"));
-            sendText(pomFactory.retailAccountPage().expMonthInput, cardInfo.get(0).get("expirationMonth"));
-            sendText(pomFactory.retailAccountPage().expYearInput, cardInfo.get(0).get("expirationYear"));
-            sendText(pomFactory.retailAccountPage().securityCodeInput, cardInfo.get(0).get("securityCode"));      
-        }
-        logger.info("User shuld edit Debit or credit card information");
+	    List<Map<String, String>> cardInfo = dataTable.asMaps(String.class, String.class); 
+	    if (!cardInfo.isEmpty()) {
+	        Map<String, String> cardData = cardInfo.get(0);
+	        RetailAccountPage retailPage = pomFactory.retailAccountPage();	        
+	        // Call the custom method to edit card information
+	        retailPage.fillDebitCardInformationWithGeneratedData(cardData);
+	        logger.info("User should edit Debit or credit card information");
+	    }
 	}
+
+//	@When("user edit information with below data")
+//	public void userEditInformationWithBelowData(DataTable dataTable) {
+//		List<Map<String, String>> cardInfo = dataTable.asMaps(String.class, String.class);
+//        for (int i = 0; i < cardInfo.size(); i++) {
+//            sendText(pomFactory.retailAccountPage().cardNumberField, DataGenerator.getCardNumber());
+//            sendText(pomFactory.retailAccountPage().nameOnCardField, cardInfo.get(0).get("nameOnCard"));
+//            sendText(pomFactory.retailAccountPage().expMonthInput, cardInfo.get(0).get("expirationMonth"));
+//            sendText(pomFactory.retailAccountPage().expYearInput, cardInfo.get(0).get("expirationYear"));
+//            sendText(pomFactory.retailAccountPage().securityCodeInput, cardInfo.get(0).get("securityCode"));      
+//        }
+//        logger.info("User shuld edit Debit or credit card information");
+//	}
 
 	@When("user click on Update Your Card button")
 	public void userClickOnUpdateYourCardButton() {
@@ -147,44 +185,56 @@ public class RetailAccountSteps extends CommonUtility {
 		click(pomFactory.retailAccountPage().addAdress);
 		logger.info(">> user click on add addressBtn");
 	}
+	
 //	@When("user fill new address form with below information")
 //	public void userFillNewAddressFormWithBelowInformation(DataTable dataTable) {
 //	    List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
 //	    RetailAccountPage retailPage = pomFactory.retailAccountPage();
 //	    Map<String, String> addressInfo = addressInfos.get(0);
-//	    sendText(retailPage.countryDropdown, DataGenerator.addressGenerator(addressInfo.get("country")));
-//	    sendText(retailPage.fullNameInput, DataGenerator.addressGenerator(addressInfo.get("fullName")));
-//	    sendText(retailPage.phoneNumberInput, DataGenerator.addressGenerator(addressInfo.get("phoneNumber")));
-//	    sendText(retailPage.streetInput, DataGenerator.addressGenerator(addressInfo.get("streetAddress")));
-//	    sendText(retailPage.apartmentInput, DataGenerator.addressGenerator(addressInfo.get("apt")));
-//	    sendText(retailPage.cityInput, DataGenerator.addressGenerator(addressInfo.get("city")));
-//	    click(retailPage.stateField);
-//	    selectByVisibleText(retailPage.stateField, DataGenerator.addressGenerator(addressInfo.get("state")));
-//	    sendText(retailPage.zipCodeInput, DataGenerator.addressGenerator(addressInfo.get("zipCode")));
-//
+//	    // Fill form fields with generated data
+//	    retailPage.fillAddressFormWithGeneratedData(addressInfo);
 //	    logger.info("Address information added");
 //	}
-
-	//kobe note
-	//this is also working but this is a bit longer
+	
+	// this code is with DataGenerator and it is much longer
 	
 	@When("user fill new address form with below information")
 	public void userFillNewAddressFormWithBelowInformation(DataTable dataTable) {
-		List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
-		for (int i = 0; i < addressInfos.size(); i++) {
-		  sendText(pomFactory.retailAccountPage().countryDropdown, addressInfos.get(0).get("country"));
-        sendText(pomFactory.retailAccountPage().fullNameInput, addressInfos.get(0).get("fullName"));
-        sendText(pomFactory.retailAccountPage().phoneNumberInput, addressInfos.get(0).get("phoneNumber"));
-        sendText(pomFactory.retailAccountPage().streetInput, addressInfos.get(0).get("streetAddress"));
-        sendText(pomFactory.retailAccountPage().apartmentInput, addressInfos.get(0).get("apt"));
-        sendText(pomFactory.retailAccountPage().cityInput, addressInfos.get(0).get("city"));
-        click(pomFactory.retailAccountPage().stateField);
-//        sendText(pomFactory.retailAccountPage().stateField, addressInfos.get(0).get("state"));
-        selectByVisibleText(pomFactory.retailAccountPage().stateField, addressInfos.get(0).get("state"));
-        sendText(pomFactory.retailAccountPage().zipCodeInput, addressInfos.get(0).get("zipCode"));
-        }
-        logger.info("adress information added");
+	    List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
+	    RetailAccountPage retailPage = pomFactory.retailAccountPage();
+	    Map<String, String> addressInfo = addressInfos.get(0);
+	    selectByVisibleText(retailPage.countryDropdown, DataGenerator.addressGenerator(addressInfo.get("country")));
+	    sendText(retailPage.fullNameInput, DataGenerator.addressGenerator(addressInfo.get("fullName")));
+	    sendText(retailPage.phoneNumberInput, DataGenerator.addressGenerator(addressInfo.get("phoneNumber")));
+	    sendText(retailPage.streetInput, DataGenerator.addressGenerator(addressInfo.get("streetAddress")));
+	    sendText(retailPage.apartmentInput, DataGenerator.addressGenerator(addressInfo.get("apt")));
+	    sendText(retailPage.cityInput, DataGenerator.addressGenerator(addressInfo.get("city")));
+	    click(retailPage.stateField);
+	    selectByVisibleText(retailPage.stateField, DataGenerator.addressGenerator(addressInfo.get("state")));
+	    sendText(retailPage.zipCodeInput, DataGenerator.addressGenerator(addressInfo.get("zipCode")));
+
+	    logger.info("Address information added");
 	}
+
+	// this is without datagenerator
+	
+//	@When("user fill new address form with below information")
+//	public void userFillNewAddressFormWithBelowInformation(DataTable dataTable) {
+//		List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
+//		for (int i = 0; i < addressInfos.size(); i++) {
+//		  sendText(pomFactory.retailAccountPage().countryDropdown, addressInfos.get(0).get("country"));
+//        sendText(pomFactory.retailAccountPage().fullNameInput, addressInfos.get(0).get("fullName"));
+//        sendText(pomFactory.retailAccountPage().phoneNumberInput, addressInfos.get(0).get("phoneNumber"));
+//        sendText(pomFactory.retailAccountPage().streetInput, addressInfos.get(0).get("streetAddress"));
+//        sendText(pomFactory.retailAccountPage().apartmentInput, addressInfos.get(0).get("apt"));
+//        sendText(pomFactory.retailAccountPage().cityInput, addressInfos.get(0).get("city"));
+//        click(pomFactory.retailAccountPage().stateField);
+//        selectByVisibleText(pomFactory.retailAccountPage().stateField, addressInfos.get(0).get("state"));
+//        sendText(pomFactory.retailAccountPage().zipCodeInput, addressInfos.get(0).get("zipCode"));
+//        }
+//        logger.info("adress information added");
+//	}
+	
 	
 	// this one i did with atumic locaters 
 	
@@ -209,7 +259,7 @@ public class RetailAccountSteps extends CommonUtility {
 		logger.info(">>usre cicked on add your addressBtn");
 	}
 
-	@Then("a message should be displayed ‘Address Added Successfully’")
+	@Then("a message should be displayed ’Address Added Successfully’")
 	public void aMessageShouldBeDisplayedAddressAddedSuccessfully() {
 		waitTillPresence(pomFactory.retailAccountPage().addressSuccessMssg);
 		Assert.assertTrue(pomFactory.retailAccountPage().addressSuccessMssg.isDisplayed());
@@ -222,43 +272,85 @@ public class RetailAccountSteps extends CommonUtility {
 	public void userClickOnEditAddressOption() {
 		click(pomFactory.retailAccountPage().editAdr);
 		logger.info(">>User click on edit address option");
-	}	
+	}
+	
 	@When("user edit new address form with below information")
 	public void userEditNewAddressFormWithBelowInformation(DataTable dataTable) {
-		List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
-		for (int i = 0; i < addressInfos.size(); i++) {
-			clearTextUsingSendKeys(pomFactory.retailAccountPage().countryDropdown);
-		sendText(pomFactory.retailAccountPage().countryDropdown, addressInfos.get(0).get("country"));
-		clearTextUsingSendKeys(pomFactory.retailAccountPage().fullNameInput);
-        sendText(pomFactory.retailAccountPage().fullNameInput, addressInfos.get(0).get("fullName"));
-		clearTextUsingSendKeys(pomFactory.retailAccountPage().phoneNumberInput);
-        sendText(pomFactory.retailAccountPage().phoneNumberInput, addressInfos.get(0).get("phoneNumber"));
-		clearTextUsingSendKeys(pomFactory.retailAccountPage().streetInput);
-        sendText(pomFactory.retailAccountPage().streetInput, addressInfos.get(0).get("streetAddress"));
-		clearTextUsingSendKeys(pomFactory.retailAccountPage().apartmentInput);
-        sendText(pomFactory.retailAccountPage().apartmentInput, addressInfos.get(0).get("apt"));
-		clearTextUsingSendKeys(pomFactory.retailAccountPage().cityInput);
-        sendText(pomFactory.retailAccountPage().cityInput, addressInfos.get(0).get("city"));
-		clearTextUsingSendKeys(pomFactory.retailAccountPage().stateField);
-        click(pomFactory.retailAccountPage().stateField);
-//        sendText(pomFactory.retailAccountPage().stateField, addressInfos.get(0).get("state"));
-        selectByVisibleText(pomFactory.retailAccountPage().stateField, addressInfos.get(0).get("state"));
-        clearTextUsingSendKeys(pomFactory.retailAccountPage().zipCodeInput);
-        sendText(pomFactory.retailAccountPage().zipCodeInput, addressInfos.get(0).get("zipCode"));
-        }
-
-	    logger.info("address information updated");
+	    List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
+	    // i use this method to make address feld empty
+	    if (!addressInfos.isEmpty()) {
+	    	// i used this here to git rid of .git(0)
+	        Map<String, String> addressInfo = addressInfos.get(0);
+	        RetailAccountPage retailPage = pomFactory.retailAccountPage();
+	        // here i Call the custom method to fill the address form
+	        retailPage.fillAddressFormWithGeneratedData(addressInfo);
+	        logger.info("Address information updated");
+	    }
 	}
+	
+	// this code is very long i used if (!addressInfos.isEmpty()) to make is a bit shorter
+	
+//	@When("user edit new address form with below information")
+//	public void userEditNewAddressFormWithBelowInformation(DataTable dataTable) {
+//	    List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
+//      // here i am using this method to make the code shorter instated of using clearTextUsingSendKeys
+//	    if (!addressInfos.isEmpty()) {
+//	        Map<String, String> addressInfo = addressInfos.get(0);
+//	        RetailAccountPage retailPage = pomFactory.retailAccountPage();
+//
+//	        clearTextUsingSendKeys(retailPage.countryDropdown);
+//	        sendText(retailPage.countryDropdown, addressInfo.get("country"));
+//	        sendText(retailPage.fullNameInput, addressInfo.get("fullName"));
+//	        sendText(retailPage.phoneNumberInput, addressInfo.get("phoneNumber"));
+//	        sendText(retailPage.streetInput, addressInfo.get("streetAddress"));
+//	        sendText(retailPage.apartmentInput, addressInfo.get("apt"));
+//	        sendText(retailPage.cityInput, addressInfo.get("city"));
+//	        click(retailPage.stateField);
+//	        sendText(retailPage.stateField, addressInfo.get("state"));
+//	        sendText(retailPage.zipCodeInput, addressInfo.get("zipCode"));
+//	    }
+//
+//	    logger.info("address information updated");
+//	}
+	
+//	// this code is run to but here i used clearTextUsingSendKeys 
+	// to remote text from infut field and this is logner too
+	
+//	@When("user edit new address form with below information")
+//	public void userEditNewAddressFormWithBelowInformation(DataTable dataTable) {
+//		List<Map<String, String>> addressInfos = dataTable.asMaps(String.class, String.class);
+//		for (int i = 0; i < addressInfos.size(); i++) {
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().countryDropdown);
+//		sendText(pomFactory.retailAccountPage().countryDropdown, addressInfos.get(0).get("country"));
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().fullNameInput);
+//        sendText(pomFactory.retailAccountPage().fullNameInput, addressInfos.get(0).get("fullName"));
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().phoneNumberInput);
+//        sendText(pomFactory.retailAccountPage().phoneNumberInput, addressInfos.get(0).get("phoneNumber"));
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().streetInput);
+//        sendText(pomFactory.retailAccountPage().streetInput, addressInfos.get(0).get("streetAddress"));
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().apartmentInput);
+//        sendText(pomFactory.retailAccountPage().apartmentInput, addressInfos.get(0).get("apt"));
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().cityInput);
+//        sendText(pomFactory.retailAccountPage().cityInput, addressInfos.get(0).get("city"));
+//		clearTextUsingSendKeys(pomFactory.retailAccountPage().stateField);
+//        click(pomFactory.retailAccountPage().stateField);
+//        sendText(pomFactory.retailAccountPage().stateField, addressInfos.get(0).get("state"));
+//        clearTextUsingSendKeys(pomFactory.retailAccountPage().zipCodeInput);
+//        sendText(pomFactory.retailAccountPage().zipCodeInput, addressInfos.get(0).get("zipCode"));
+//        }
+//
+//	    logger.info("address information updated");
+//	}
 
 
 	@When("User click update Your Address button")
 	public void userClickUpdateYourAddressButton() {
-		scrollPageDownWithJS();
+		//scrollPageDownWithJS();
 		click(pomFactory.retailAccountPage().updateAddressBtn);
 		logger.info(">>User click on update addressBtn");
 
 	}
-	@Then("a message should be displayed ‘Address Updated Successfully’")
+	@Then("a message should be displayed ’Address Updated Successfully’")
 	public void aMessageShouldBeDisplayedAddressUpdatedSuccessfully() {
 		waitTillPresence(pomFactory.retailAccountPage().addressUpdateSuccessMsg);
 		Assert.assertTrue(pomFactory.retailAccountPage().addressUpdateSuccessMsg.isDisplayed());
@@ -282,5 +374,18 @@ public class RetailAccountSteps extends CommonUtility {
         }
 		
 	}
+	
+//	
+//	@Then("a message should be displayed {string}")
+//	public void aMessageShouldBeDisplayedAddressUpdatedSuccessfullyTest(String message) {
+//		if(message.equals("Address Updated Successfully")) {
+//		waitTillPresence(pomFactory.retailAccountPage().addressUpdateSuccessMsg);
+//		Assert.assertTrue(pomFactory.retailAccountPage().addressUpdateSuccessMsg.isDisplayed());
+//		logger.info(">>Address Updated Successfully");}
+//		else if(message.equals("Address Added Successfully")) {
+//			waitTillPresence(pomFactory.retailAccountPage().addressUpdateSuccessMsg);
+//			Assert.assertTrue(pomFactory.retailAccountPage().addressUpdateSuccessMsg.isDisplayed());
+//			logger.info(">>Address Updated Successfully");}
+//	}
 
 }

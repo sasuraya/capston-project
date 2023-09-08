@@ -12,14 +12,16 @@ import org.junit.runner.RunWith;
 @CucumberOptions
 
         (
-        tags = "@removeaddress", // Specifies which scenario(s) to run using the given tag
+        tags = "", // Specifies which scenario(s) to run using the given tag
 		features = ("classpath:features"), // Specifies the path to the feature files
 		glue = "tek.capstone.framework", // Specifies the package containing step definition classes
 		dryRun = false, // If set to true, it prints the steps without executing them; if false, it rins
 						// the tests
 		plugin = { // Specifies the plugins to generate different types of reports
-				"pretty", "html:target/htmlReports/cucumber-pretty.html",
-				"json:target/jsonReports/cucumber.json" }, snippets = CAMELCASE, // Specifies the naming convention for
+                "pretty",
+                "html:target/htmlReports/cucumber-pretty.html",
+                "json:target/jsonReports/cucumber.json" }, 
+		snippets = CAMELCASE, // Specifies the naming convention for
 																					// step definitions snippets
 		monochrome = true // Displays the console output in a more readable format
 )

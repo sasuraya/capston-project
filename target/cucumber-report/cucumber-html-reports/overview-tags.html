@@ -48,32 +48,32 @@ $(document).ready(function() {
 $(document).ready(function() {
 
     var chartData = {
-        labels:  [ "@CompleteTest",  "@login", ] ,
+        labels:  [ "@addItemToCartAndCheckout",  "@cancelOrder",  "@createnewAccount",  "@returnOrder",  "@reviewOrder",  "@sidebarOption",  "@verifySideBar", ] ,
         datasets: [
             {
                 label: "Passed",
                 backgroundColor: "#92DD96",
-                data:  [ 100.00,  100.00, ] 
+                data:  [ 100.00,  100.00,  100.00,  100.00,  100.00,  100.00,  100.00, ] 
             },
             {
                 label: "Failed",
                 backgroundColor: "#F2928C",
-                data:  [ 0.00,  0.00, ] 
+                data:  [ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00, ] 
             },
             {
                 label: "Skipped",
                 backgroundColor: "#8AF",
-                data:  [ 0.00,  0.00, ] 
+                data:  [ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00, ] 
             },
             {
                 label: "Pending",
                 backgroundColor: "#F5F28F",
-                data:  [ 0.00,  0.00, ] 
+                data:  [ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00, ] 
             },
             {
                 label: "Undefined",
                 backgroundColor: "#F5B975",
-                data:  [ 0.00,  0.00, ] 
+                data:  [ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00, ] 
             }
         ]
     };
@@ -135,7 +135,7 @@ $(document).ready(function() {
     <tr class="info">
       <td>cucumber-jvm-example</td>
         <td>1</td>
-      <td>22 Aug 2023, 15:05</td>
+      <td>08 Sep 2023, 14:17</td>
     </tr>
   </tbody>
 </table>
@@ -197,37 +197,122 @@ $(document).ready(function() {
 
   <tbody>
       <tr>
-        <td class="tagname"><a href="report-tag_303864266.html">@CompleteTest</a></td>
+        <td class="tagname"><a href="report-tag_363545677.html">@addItemToCartAndCheckout</a></td>
 
-        <td      class="passed"    >3</td>
+        <td      class="passed"    >11</td>
         <td >0</td>
         <td >0</td>
         <td >0</td>
         <td >0</td>
-        <td class="total">3</td>
+        <td class="total">11</td>
 
         <td  class="passed"    >1</td>
         <td >0</td>
         <td class="total">1</td>
 
-        <td class="duration" data-value="515278100">0.515</td>
+        <td class="duration" data-value="1613691600">1.613</td>
         <td class="passed">Passed</td>
       </tr>
       <tr>
-        <td class="tagname"><a href="report-tag_4082898728.html">@login</a></td>
+        <td class="tagname"><a href="report-tag_232373427.html">@cancelOrder</a></td>
 
-        <td      class="passed"    >3</td>
+        <td      class="passed"    >6</td>
         <td >0</td>
         <td >0</td>
         <td >0</td>
         <td >0</td>
-        <td class="total">3</td>
+        <td class="total">6</td>
 
         <td  class="passed"    >1</td>
         <td >0</td>
         <td class="total">1</td>
 
-        <td class="duration" data-value="515278100">0.515</td>
+        <td class="duration" data-value="546680900">0.546</td>
+        <td class="passed">Passed</td>
+      </tr>
+      <tr>
+        <td class="tagname"><a href="report-tag_2109438632.html">@createnewAccount</a></td>
+
+        <td      class="passed"    >4</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td class="total">4</td>
+
+        <td  class="passed"    >1</td>
+        <td >0</td>
+        <td class="total">1</td>
+
+        <td class="duration" data-value="690484400">0.690</td>
+        <td class="passed">Passed</td>
+      </tr>
+      <tr>
+        <td class="tagname"><a href="report-tag_317747133.html">@returnOrder</a></td>
+
+        <td      class="passed"    >7</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td class="total">7</td>
+
+        <td  class="passed"    >1</td>
+        <td >0</td>
+        <td class="total">1</td>
+
+        <td class="duration" data-value="8636369500">8.636</td>
+        <td class="passed">Passed</td>
+      </tr>
+      <tr>
+        <td class="tagname"><a href="report-tag_3163934357.html">@reviewOrder</a></td>
+
+        <td      class="passed"    >6</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td class="total">6</td>
+
+        <td  class="passed"    >1</td>
+        <td >0</td>
+        <td class="total">1</td>
+
+        <td class="duration" data-value="1151627600">1.151</td>
+        <td class="passed">Passed</td>
+      </tr>
+      <tr>
+        <td class="tagname"><a href="report-tag_146076336.html">@sidebarOption</a></td>
+
+        <td      class="passed"    >10</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td class="total">10</td>
+
+        <td  class="passed"    >5</td>
+        <td >0</td>
+        <td class="total">5</td>
+
+        <td class="duration" data-value="902203400">0.902</td>
+        <td class="passed">Passed</td>
+      </tr>
+      <tr>
+        <td class="tagname"><a href="report-tag_2098806850.html">@verifySideBar</a></td>
+
+        <td      class="passed"    >1</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td class="total">1</td>
+
+        <td  class="passed"    >1</td>
+        <td >0</td>
+        <td class="total">1</td>
+
+        <td class="duration" data-value="119564400">0.119</td>
         <td class="passed">Passed</td>
       </tr>
   </tbody>
@@ -235,19 +320,19 @@ $(document).ready(function() {
   <tfoot class="total">
     <tr>
       <td></td>
-      <td>6</td>
+      <td>45</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>6</td>
+      <td>45</td>
 
-      <td>2</td>
+      <td>11</td>
       <td>0</td>
-      <td>2</td>
+      <td>11</td>
 
-      <td class="duration">1.030</td>
-      <td>2</td>
+      <td class="duration">13.660</td>
+      <td>7</td>
     </tr>
     <tr>
       <td></td>

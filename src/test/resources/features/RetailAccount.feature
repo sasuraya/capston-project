@@ -1,4 +1,3 @@
-@CompleteTest
 Feature: Retail Account Page
   ​
 
@@ -10,55 +9,55 @@ Feature: Retail Account Page
     And User should be logged in into Account
     When User click on Account option
 
-  @updatePI
+  
   Scenario: Verify User can update Profile Information
     When User click on Account option
-    And User update Name 'Tamo Jan' and Phone '2023452355'
+    And User update Name 'Tamo Jan' and Phone 'phoneNumber'
     And User click on Update button
     Then user profile information should be updated
 
-  @addPaymentMethod
+  
   Scenario: Verify User can add a payment method
     And User click on Add a payment method link
     And User fill Debit or credit card information
-      | cardNumber       | nameOnCard | expirationMonth | expirationYear | securityCode |
-      | 2317823456785234 | Tamo Jan   |              11 |           2023 |          324 |
+      | cardNumber | nameOnCard | expirationMonth | expirationYear | securityCode |
+      | cardNumber | Tamo Jan   |              11 |           2023 |          324 |
     And User click on Add your card button
     Then a message should be displayed ‘Payment Method added successfully’
 
-  @editDibitOrCredit
+  
   Scenario: Verify User can edit Debit or Credit card
     And User click on Edit option of card section
     And user edit information with below data
-      | cardNumber       | nameOnCard  | expirationMonth | expirationYear | securityCode |
-      | 2317523456785232 | Tammoo John |              12 |           1013 |          321 |
+      | cardNumber | nameOnCard  | expirationMonth | expirationYear | securityCode |
+      | cardNumber | Tammoo John |              12 |           1013 |          321 |
     And user click on Update Your Card button
-    Then a message should be displayed 'Payment Method updated Successfully'
+    Then a message should be displayed ‘Payment Method updated Successfully’
 
-  @removeDibitOrCredit
+  
   Scenario: Verify User can remove Debit or Credit card
     And User click on remove option of card section
     Then payment details should be removed
 
-  @addAddress
+  
   Scenario: Verify User can add an Address
     And User click on Add address option
     And user fill new address form with below information
-      | country       | fullName    | phoneNumber | streetAddress | apt | city     | state         | zipCode |
-      | United States | Tammoo John |  2023452349 | 211 main St   | 345 | Sterling | Jarvis Island |   20164 |
+      | country      | fullName      | phoneNumber | streetAddress | apt      | city      | state      | zipCode      |
+      | countryValue | fullnameValue | PhoneValue  | stAddress     | aptValue | cityValue | stateValue | zipCodeValue |
     And User click Add Your Address button
-    Then a message should be displayed 'Address Added Successfully'
+    Then a message should be displayed ’Address Added Successfully’
 
-  @addressEdit
+  
   Scenario: Verify User can edit an Address added on account
     And User click on edit address option
     And user edit new address form with below information
       | country       | fullName    | phoneNumber | streetAddress | apt | city     | state    | zipCode |
       | United States | Tammoo John |  2023452344 | 211 main St   | 654 | Sterling | Virginia |   20164 |
     And User click update Your Address button
-    Then a message should be displayed 'Address Updated Successfully'
+    Then a message should be displayed ’Address Updated Successfully’
 
-  @removeaddress
+  
   Scenario: Verify User can remove Address from Account
     And User click on remove option of Address section
     Then Address details should be removed

@@ -45,9 +45,13 @@ public class CommonUtility extends BaseSetup {
 	    public void click(WebElement element) {
 	        this.waitTillClickable(element).click();
 	    }
+	   //i add this line
+		public void clearAndSend(WebElement element, String string) {
+	    	this.clearAndSend(element, string);
+	    }
 	    public void sendText(WebElement element, String value) {
 	        this.waitTillPresence(element).sendKeys(value);
-	    }
+	    } 
 	    public String getElementText(WebElement element) {
 	        return this.waitTillPresence(element).getText();
 	    }
