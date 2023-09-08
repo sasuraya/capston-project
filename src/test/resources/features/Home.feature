@@ -1,17 +1,15 @@
-@CompleteTest
 Feature: Retail Home Page
-  ​
 
   Background: 
     Given User is on retail website homepage
+    When User click on All section
 
   @verifySideBar
   Scenario: Verify Shop by Department sidebar
-    When User click on All section
     Then below options are present in Shop by Department sidebar
       | Electronics | Computers | Smart Home | Sports | Automative |
 
-  @sidebarOption
+  @sidebarOption 
   Scenario Outline: Verify department sidebar options
     And User on <department>
     Then below options are present in department
